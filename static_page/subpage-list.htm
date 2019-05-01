@@ -1,0 +1,23 @@
+description = "Subpage menu"
+
+[viewBag]
+snippetCode = "subpagemenu"
+snippetName = "Sub page list"
+==
+<?php
+function onStart(){
+    if (isset($this->page->apiBag['staticPage'])) {
+        $this['subPages'] = $this->page->apiBag['staticPage']->getChildren();
+    }    
+}
+?>
+==
+{#
+INFO
+added parent pages also display sub-pages as menu
+#}
+<ul class="subpage_list">
+{% for spage in subPages %}
+    <li><a href="{{ spage.fileName|staticPage }}">{{ spage.title }}</a></li>
+{% endfor %}
+</ul>
