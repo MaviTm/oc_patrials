@@ -1,0 +1,14 @@
+[viewBag]
+==
+{% for item in items if not item.viewBag.isHidden %}
+<li class="nav-item {{ item.isActive ? ' active' : '' }}{{ item.items ? ' dropdown has-children' : '' }}{{ item.isChildActive ? ' child-active' : '' }}{{ item.viewBag.cssClass }}">
+    {% if item.url %}
+    <a class="nav-link{{ item.items ? ' dropdown-toggle' : '' }}" href="{{ item.url }}"{{ item.viewBag.isExternal ? ' target="_blank"':'' }}{{ item.items ? ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"' : '' }}>{{ item.title|_ }}</a>
+    {% else %}
+    <a class="sub-nav-link{{ item.items ? ' dropdown-toggle' : '' }}"{{ item.viewBag.isExternal ? ' target="_blank"':'' }}{{ item.items ? ' data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"' : '' }}>{{ item.title|_ }}</a>
+    {% endif %}
+    {% if item.items %}
+    <ul class="dropdown-menu">{% partial __SELF__ ~ "::subitems" items=item.items %}</ul>
+    {% endif %}
+</li>
+{% endfor %}
